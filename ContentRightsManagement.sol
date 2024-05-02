@@ -7,7 +7,7 @@ pragma solidity ^0.8.0;
  */
 contract ContentRightsManagement {
     uint256 public registrationFee;
-    address private owner;
+    address payable private owner; // Making sure owner is payable
     mapping(address => bool) public isContentCreator;
     mapping(address => bool) public isBuyer;
     mapping(bytes32 => Content) public contents;
@@ -25,7 +25,7 @@ contract ContentRightsManagement {
     // Constructor to set the initial registration fee and owner
     constructor(uint256 _registrationFee) {
         registrationFee = _registrationFee;
-        owner = msg.sender;
+        owner = payable(msg.sender); // Casting the owner as payable
     }
 
     modifier onlyOwner() {
@@ -84,8 +84,7 @@ contract ContentRightsManagement {
         uint256 amount = address(this).balance;
         require(amount > 0, "No fees to withdraw");
 
-        (bool success, ) = owner.call{value: amount}("");
-        require(success, "Withdrawal failed");
+        owner.transfer(amount);  // Using .transfer() for simplicity and safety
         emit Withdrawal(amount, owner);
     }
 }
