@@ -32,5 +32,5 @@ sequenceDiagram
     Verifier->>SmartContract: verifyContentOwnership(contentHash, buyer)
     SmartContract-->>Verifier: return ownership status
     Owner->>SmartContract: withdrawFees()
-
+    SmartContract-->>Owner: transfer(amount)
 ```
