@@ -1,6 +1,6 @@
 # content-rights-management
 
-## Smart contract
+## Smart Contract
 
 ### Overview
 The `ContentRightsManagement` smart contract is designed to facilitate digital rights management for content creators and buyers on a blockchain. It provides mechanisms for registering content creators and buyers, adding and purchasing content, and verifying content ownership.
@@ -14,3 +14,23 @@ The `ContentRightsManagement` smart contract is designed to facilitate digital r
 
 ### Purpose
 This contract aims to streamline the process of managing digital content rights. It ensures that content creators are fairly compensated for their work, while buyers receive verifiable rights to the digital content they purchase.
+
+### Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant ContentCreator as Content Creator
+    participant SmartContract as Smart Contract
+    participant Buyer
+    participant Verifier
+    participant Owner
+
+    ContentCreator->>SmartContract: registerContentCreator()
+    ContentCreator->>SmartContract: addContent(hash, price)
+    Buyer->>SmartContract: registerBuyer()
+    Buyer->>SmartContract: buyContent(hash)
+    SmartContract-->>ContentCreator: transfer(price)
+    Verifier->>SmartContract: verifyContentOwnership(contentHash, buyer)
+    SmartContract-->>Verifier: return ownership status
+    Owner->>SmartContract: withdrawFees()
+
+```
